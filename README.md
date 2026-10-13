@@ -1,60 +1,73 @@
-# CSFC 足球队网站
+# CSFC · 有密码的球队主场
 
-线上网站：[CSFC · 我们的主场](https://nofcfy-fanqi.github.io/csfc/)。
+网站：https://nofcfy-fanqi.github.io/csfc/
 
-适用于 GitHub Pages 的静态网站，无需安装依赖或构建。包含响应式首页、队员名册、搜索、位置筛选、队员详情、分类相册与照片放大。
+GitHub Pages 提供全部发布文件。访客在自己的浏览器输入密码，解密完整网页、名单和照片。维护者电脑关机不影响网站访问。
 
-## 修改内容
+## 公开仓库
 
-编辑 `data.js`：
+- `index.html`、`gate.css`、`gate.js`：密码入口与浏览器解密代码。
+- `site.enc.json`：加密后的完整网站，包括原始网页、样式、功能代码、名单和照片。
+- `assets/crest.svg`：公开队徽，无队员资料。
+- `scripts/`：通用打包、加密、恢复与预览工具，无访问密码。
 
-- `team.name`：球队名称。
-- `team.tagline`：首页介绍，`\n` 表示换行。
-- `team.demo`：替换真实名单后改为 `false`。
-- `players`：名字 `name`、学号 `studentId`、印字 `jerseyName`、印号 `number`、位置 `position`、照片 `photo`。
-- `albums`：标题 `title`、分类 `category`、照片 `photo`、描述 `description`。
+公开文件不含密码、解密密钥、原始名单和受保护照片。原稿和密码放在被 Git 忽略的 `.private-source/`，不会提交上传。
 
-队员位置使用“门将”“后卫”“中场”“前锋”。印号和学号写成字符串，以保留前导零。队员和相册数量可以自由增减。
+保护开始前的示例名单及示例球场照片已经公开，仍能从旧的 Git 历史读取。本次未改写历史，不能收回以前公开的内容。目前没有真实队员资料；以后真实内容应在私有原稿中修改，加密后再上传。
 
-把照片放在 `assets/photos/`，例如：
+## 修改资料
 
-```js
-{ name: "你的名字", studentId: "你的学号", jerseyName: "YOUR NAME", number: "07", position: "前锋", photo: "./assets/photos/player-07.jpg" }
-```
+在维护者电脑编辑 `.private-source/site/data.js`。字段：`name` 名字、`studentId` 学号、`jerseyName` 印字、`number` 印号、`position` 位置、`photo` 照片。
 
-相册分类使用“合影”“比赛”“训练”。`photo` 留空时展示占位。真实照片不需要 `sample: true`。目前所有成员资料均为示例，球场照片为氛围参考，并非球队活动照片。
+照片放在 `.private-source/site/assets/photos/`，路径例如 `./assets/photos/player-07.jpg`。程序会把所有图片一起加密，并拒绝外部图片链接。网页、样式和功能代码保存在 `.private-source/site/`。
 
-GitHub Pages 上的内容是公开的，`data.js` 中的学号也可被读取。发布前请确认队员同意公开；不公开时可以直接把 `studentId` 改成打码内容（例如 `2026****01`）或 `未公开`，不要把完整学号留在文件中。
-
-## 本地预览
-
-在本目录运行：
+更新后运行：
 
 ```sh
-python3 -m http.server 8000 --bind 127.0.0.1
+node scripts/build-protected.mjs
 ```
 
-浏览器打开 `http://127.0.0.1:8000`。也可以直接双击 `index.html`，页面没有依赖网络的脚本、字体或图片。
+提交新的 `site.enc.json` 和公开入口文件，推送到 `master`，GitHub Pages 自动更新。不要强行提交 `.private-source/`，不要把密码或未加密的原稿上传公开仓库。
 
-## 部署到 GitHub Pages
+## 访问密码
 
-本项目的 GitHub 仓库为 `nofcfy-fanqi/csfc`，从 `master` 分支根目录发布。将修改推送到该分支后，GitHub Pages 会自动更新。
+首次构建生成随机长密码，存于被忽略的 `.private-source/access-password.txt`（文件权限 600，仅本地）。密码不写入公开文件。
 
-1. 在 GitHub 创建仓库并上传本目录的文件，确保 `index.html` 在根目录。
-2. 打开仓库 **Settings → Pages**。
-3. 选择 **Deploy from a branch**，选择存放网站的分支（通常是 `main`）和 **/(root)**，保存。
-4. 发布成功后，可在 Pages 设置中查看网站链接。
+编辑该本地文件后重新构建可以修改密码；自动生成新密码可运行：
 
-普通仓库的网站地址为 `https://你的用户名.github.io/仓库名/`。若希望地址直接为 `https://你的用户名.github.io/`，仓库名称应为 `你的用户名.github.io`。
+```sh
+node scripts/build-protected.mjs --rotate-password
+```
 
-所有资源使用相对路径，支持根站点和带仓库名的项目站点。`.nojekyll` 告诉 GitHub Pages 直接提供静态文件。
+公开密文可下载，因此保留较长的随机密码。改密码只保护新版本；拥有旧密码和旧密文的人仍能解密旧内容。知道密码的访客可以保存或分享解密后资料，此方案不能阻止截图或转发。
 
-参考：[GitHub Pages 发布源配置](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)、[GitHub Pages 快速开始](https://docs.github.com/en/pages/quickstart)。
+应用不向浏览器 localStorage、sessionStorage、IndexedDB 或缓存存储写入密码、密钥和解密内容。刷新或点击“锁定网站”后，需要重新输入密码。密码管理器是否保存密码由访客自行选择。
 
-## 图片与标识
+## 换电脑恢复
 
-- `assets/stadium.jpg`：Unsplash 球场示例图片，来源 https://images.unsplash.com/photo-1522778119026-d647f0596c20 。可以替换为自己的球队照片，替换后同时修改首页照片的 `alt`、氛围示例说明和 `data.js` 中相册的说明。
-- `assets/crest.svg`：此项目绘制的临时 CSFC 队徽。更名时可同步修改 SVG 中的文字，或替换为自己的标识。
-- 队员无照片时展示按印字与印号生成的球衣示意图。
+加密文件包含全部原稿，云端文件足够恢复。没有密码则无法恢复，请保管好密码。
 
-页面为展示网站，照片与成员信息通过文件维护；不含在线上传、数据库或后台管理。
+在新电脑克隆仓库，创建 `.private-source/access-password.txt` 并写入已有密码，运行：
+
+```sh
+node scripts/build-protected.mjs --recover
+```
+
+原稿会恢复到 `.private-source/site/`，不覆盖已有文件，不上传明文资料。
+
+## 检查与预览
+
+```sh
+node --test tests/protection.test.mjs
+python3 scripts/preview.py
+```
+
+打开 `http://127.0.0.1:8000`。预览服务器只提供公开文件，拒绝访问原稿、密码、Git 元数据与其他路径。线上使用 GitHub Pages 的 HTTPS 地址，不需要本地服务器。
+
+## 加密方式
+
+AES-256-GCM，128 位认证标签，每次随机 16 字节盐、12 字节 IV，PBKDF2-HMAC-SHA256 600,000 次迭代。图片解密后使用内存 Blob URL 显示。
+
+参考：[Web Crypto AES-GCM](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt)、[PBKDF2 派生密钥](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey)。
+
+初版球场氛围图来自 Unsplash `photo-1522778119026-d647f0596c20`，并非球队比赛照片。临时 CSFC 队徽与球衣示意图为项目绘制。
