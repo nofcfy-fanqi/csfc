@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123f33">
+  <meta name="description" content="CSFC 足球队，记录我们的队员与球场时刻。">
+  <title>CSFC · 我们的主场</title>
+  <link rel="icon" href="./assets/crest.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./data.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#squad">跳到队员名册</a>
+  <header class="header">
+    <a class="brand" href="#home" aria-label="CSFC 首页"><img src="./assets/crest.svg" alt="" width="40" height="46"><span><b data-team-name>CSFC</b><small>FOOTBALL CLUB</small></span></a>
+    <nav aria-label="主导航"><a class="nav-link active" href="#home">我们的主场</a><a class="nav-link" href="#squad">队员名册</a><a class="nav-link" href="#moments">球场相册</a></nav>
+    <a class="header-cta" href="#squad">认识球队 <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <img class="hero-photo" src="./assets/stadium.jpg" alt="灯光下的足球场与看台，网站氛围示例照片" fetchpriority="high" width="2000" height="1333">
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow light"><span class="status-dot"></span> <span data-team-name>CSFC</span> / FOOTBALL CLUB</p>
+        <h1 id="hero-title">因为热爱，<br>我们<span class="outlined">同场。</span></h1>
+        <p class="hero-description" id="team-tagline">从第一次传球，到最后一声哨响。<br>这里，记录属于我们的足球故事。</p>
+        <a class="button button-orange" href="#squad">认识我们的队员 <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-side" aria-hidden="true">ONE TEAM. ONE PASSION.</div>
+      <div class="hero-bottom"><span>OUR GAME. OUR PEOPLE. OUR STORY.</span><span class="hero-photo-note">球场氛围示例 · Unsplash</span><a href="#squad" aria-label="向下浏览队员名册">向下探索 <span aria-hidden="true">↓</span></a></div>
+    </section>
+
+    <div class="club-strip"><p><span class="mini-ball" aria-hidden="true">✳</span> <b>一支球队，一份热爱。</b></p><span>在球场相遇，也在球场之外成为队友。</span><span class="strip-code">CSFC — TOGETHER ON THE PITCH</span></div>
+
+    <section class="section squad-section" id="squad" aria-labelledby="squad-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / THE SQUAD</p><h2 id="squad-title">我们的队员<span class="orange-dot">.</span></h2></div><p class="section-description">不同的位置，同一个方向。<br>认识每一位并肩上场的队友。</p></div>
+      <div class="demo-note" id="demo-note"><span class="note-dot" aria-hidden="true"></span>当前名册为示例资料，等待换上你们的名字。</div>
+      <div class="roster-toolbar"><div class="filter-group" id="position-filters" role="group" aria-label="按位置筛选"><button class="filter active" type="button" data-position="all" aria-pressed="true">全部队员 <span id="total-count">0</span></button><button class="filter" type="button" data-position="门将" aria-pressed="false">门将</button><button class="filter" type="button" data-position="后卫" aria-pressed="false">后卫</button><button class="filter" type="button" data-position="中场" aria-pressed="false">中场</button><button class="filter" type="button" data-position="前锋" aria-pressed="false">前锋</button></div><label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="player-search" type="search" placeholder="搜索姓名、学号、印字或号码" autocomplete="off" aria-label="搜索队员姓名、学号、球衣印字或印号"></label></div>
+      <p class="sr-only" id="search-status" role="status" aria-live="polite"></p>
+      <div class="player-grid" id="player-grid"></div>
+      <div class="empty-state" id="empty-state" hidden><span aria-hidden="true">↗</span><h3>还没有找到这位队员</h3><p>试试其他姓名、印号，或查看全部队员。</p><button class="button button-green" id="clear-search" type="button">查看全部队员</button></div>
+      <p class="roster-footer"><span id="visible-count"></span><span>每一个名字，都是球队的一部分。</span></p>
+    </section>
+
+    <section class="moments-section" id="moments" aria-labelledby="moments-title"><div class="section">
+      <div class="section-heading"><div><p class="eyebrow">02 / CLUB MOMENTS</p><h2 id="moments-title">不止九十分钟<span class="orange-dot">.</span></h2></div><p class="section-description">比赛、训练，还有一起笑过的瞬间。<br>把值得记住的时刻留在这里。</p></div>
+      <div class="album-toolbar"><div class="filter-group" id="album-filters" role="group" aria-label="按照片分类筛选"><button class="filter active" data-category="all" aria-pressed="true" type="button">全部时刻</button><button class="filter" data-category="合影" aria-pressed="false" type="button">球队合影</button><button class="filter" data-category="比赛" aria-pressed="false" type="button">比赛日</button><button class="filter" data-category="训练" aria-pressed="false" type="button">日常训练</button></div><span class="album-tip">有照片的卡片可点击放大 <span aria-hidden="true">↗</span></span></div>
+      <div class="album-grid" id="album-grid"></div>
+      <p class="sr-only" id="album-status" role="status" aria-live="polite"></p>
+    </div></section>
+
+    <section class="club-closing" aria-label="球队宣言"><img src="./assets/crest.svg" alt="" width="64" height="74"><p>球会踢完，<br class="mobile-break">故事还在继续。</p><span>SEE YOU ON THE PITCH.</span><a class="back-top" href="#home">回到主场 <span aria-hidden="true">↑</span></a></section>
+  </main>
+  <footer><a class="footer-brand" href="#home" data-team-name>CSFC</a><span>为热爱而聚，为球队而战。</span><small>© <span id="copyright-year"></span> <span data-team-name>CSFC</span> FOOTBALL CLUB</small></footer>
+
+  <dialog id="player-dialog" class="player-dialog" aria-labelledby="player-dialog-title"><button class="dialog-close" type="button" aria-label="关闭队员信息">×</button><div id="player-dialog-content"></div></dialog>
+  <dialog id="photo-dialog" class="photo-dialog" aria-labelledby="photo-dialog-title"><button class="dialog-close" type="button" aria-label="关闭照片">×</button><img id="photo-dialog-image" src="" alt=""><div class="photo-dialog-caption"><h3 id="photo-dialog-title"></h3><p id="photo-dialog-description"></p></div></dialog>
+  <noscript><p class="noscript-message">请启用 JavaScript 查看队员名册与相册。</p></noscript>
+</body>
+</html>
