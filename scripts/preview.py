@@ -4,7 +4,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 import os
 ROOT = Path(__file__).resolve().parent.parent
-PUBLIC = {"index.html", "gate.css", "gate.js", "site.enc.json", "assets/crest.svg"}
+PUBLIC = {"index.html", "gate.css", "gate.js", "men.enc.json", "women.enc.json", "assets/crest.svg"}
 class PublicHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
         name = unquote(urlsplit(self.path).path).lstrip("/") or "index.html"

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#123f33">
-  <meta name="description" content="CSFC 足球队 · 输入球队密码，进入我们的主场。">
+  <meta name="description" content="CSFC 足球队 · 选择男队或女队，输入对应密码进入主场。">
   <meta name="robots" content="noindex, nofollow">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob:; connect-src 'self'; font-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
   <title>CSFC · 欢迎回到主场</title>
@@ -23,11 +23,15 @@
     <section class="gate-panel" aria-labelledby="unlock-title">
       <div class="unlock-card">
         <div class="lock-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></div>
-        <p class="card-eyebrow">CSFC / MEMBERS AREA</p>
-        <h2 id="unlock-title">欢迎回到主场<span style="color:#ed783f">.</span></h2>
-        <p class="card-description">输入球队访问密码，<br>查看队员名册与球场相册。</p>
+        <p class="card-eyebrow" id="selected-team-label">CSFC / 男队</p>
+        <h2 id="unlock-title">进入男队主场<span style="color:#ed783f">.</span></h2>
+        <p class="card-description">选择你的球队，输入对应访问密码，<br>查看队员名册与球场相册。</p>
+        <div class="team-selector" role="group" aria-label="选择球队">
+          <button class="team-choice selected" type="button" data-team="men" aria-pressed="true"><span class="team-choice-name">男队</span><span class="team-choice-code">MEN'S TEAM</span></button>
+          <button class="team-choice" type="button" data-team="women" aria-pressed="false"><span class="team-choice-name">女队</span><span class="team-choice-code">WOMEN'S TEAM</span></button>
+        </div>
         <form id="unlock-form">
-          <label class="password-label" for="access-password">球队访问密码</label>
+          <label class="password-label" id="password-label" for="access-password">男队访问密码</label>
           <div class="password-box"><input id="access-password" name="password" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="输入访问密码" aria-describedby="unlock-status" required><button id="show-password" type="button" aria-controls="access-password" aria-pressed="false">显示</button></div>
           <button id="unlock-submit" type="submit">进入我们的主场 <span aria-hidden="true">↗</span></button>
           <p id="unlock-status" role="status" aria-live="polite"></p>
